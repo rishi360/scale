@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: productcatalogue-canary
+  labels:
+    app: productcatalogue-canary
+spec:
+  type: ClusterIP
+  selector:
+    app: productcatalogue-canary
+  ports:
+  - protocol: TCP
+    port: 8020
+    name: http
+
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: productcatalogue-canary
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: productcatalogue-canary
+    spec:
+      containers:
+      - name: productcatalogue-canary
+        image: rishabh050189/djproductcatalogue:1.0.41
+        ports:
+        - containerPort: 8020
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 8025
+          initialDelaySeconds: 30
+          timeoutSeconds: 1

@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: ambassador
+  name: ambassador
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v0
+      kind:  Mapping
+      name:  shopfront
+      prefix: /
+      service: shopfront:8010
+      ---
+      apiVersion: ambassador/v0
+      kind:  Mapping
+      name:  shopfront_canary
+      prefix: /
+      weight: ${WEIGHT}
+      service: shopfront-canary:8010
+      
+spec:
+  externalIPs:
+  - 192.168.5.173
+  type: LoadBalancer
+  ports:
+  - name: ambassador
+    port: 80
+    targetPort: 80
+  selector:
+    service: ambassador
