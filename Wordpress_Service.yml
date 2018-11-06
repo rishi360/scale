@@ -2,11 +2,11 @@ apiVersion: v1
 kind: service
 metadata:
      labels:
-	    name: Frontapp
+         name: Frontapp
 spec:
   type: ClusterIP
   ports:
-     -port: 80
-	  NodePort: 30000
+    - port: 80
+      NodePort: 30000
   selector: 
        name: wordpress
