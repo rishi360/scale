@@ -1,18 +1,19 @@
-apiversion: apps/v1beta1
+apiVersion: apps/v1beta1
 kind: Deployment
-metadata:
-     name: wordpress
-specific:
-     template: 
-	    metadata: 
-		     labels: 
-			     run: wordpress
-spec:
-   containers:
-          image: rishabh050189/wordpressmy:01
-		  imagePull: Always
-		  ports: 
-		     -containerPort: 80
-	      env:
-		    -name: wordpress_dd_password
-			 value: password
+metadata: 
+  name: wordpress
+spec: 
+  template: 
+    metadata: 
+      labels: 
+        app: wordpress
+    spec: 
+      containers: 
+        - name: wordpressmy 
+          image: "rishabh050189/wordpressmy:01"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+           - name: Wordpress_Password
+             value: passsword
