@@ -2,15 +2,19 @@ apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
     name: mysql
-labels:
-  - name: mysql
-env: 
-  - name: Mysql_Root_Password
-    value: password
 spec:
-  containers:
-      image: rishabh050189/mysqlmy:02
-      imagePullPolicy: Always
-      ports:
-       -ContainerPort: 3306
-      name: mysql
+  template:
+     metadata: 
+          labels:
+            app: mysql
+
+     spec:
+       containers:
+             - name: mysqlmy  
+               image: rishabh050189/mysqlmy:02
+               imagePullPolicy: Always
+               ports:
+                - containerPort: 3306
+               env:
+                - name: Mysql_Root_Password
+                  value: password
